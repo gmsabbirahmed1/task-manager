@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple task manager to organize your daily work.">
+    <title>{% block title %}Task Manager{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+</head>
+<body class="min-h-screen font-sans bg-gray-50 text-gray-800 antialiased">
+
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div id="flash-messages" class="fixed top-4 right-4 z-50 space-y-2 max-w-sm">
+        {% for message in messages %}
+        <div class="flash-message flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium shadow-lg animate-slide-in
+            {% if message.tags == 'success' %}
+                bg-emerald-50 border border-emerald-200 text-emerald-700
+            {% elif message.tags == 'error' %}
+                bg-red-50 border border-red-200 text-red-700
+            {% else %}
+                bg-blue-50 border border-blue-200 text-blue-700
+            {% endif %}
+        ">
+            {% if message.tags == 'success' %}
+                <i data-lucide="check-circle" class="w-4 h-4 flex-shrink-0"></i>
+            {% elif message.tags == 'error' %}
+                <i data-lucide="x-circle" class="w-4 h-4 flex-shrink-0"></i>
+            {% else %}
+                <i data-lucide="info" class="w-4 h-4 flex-shrink-0"></i>
+            {% endif %}
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="max-w-2xl mx-auto px-4 py-10 sm:px-6">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-gray-400 text-xs">
+        <p>Task Manager &mdash; Built with Django &amp; Tailwind CSS</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Auto-dismiss flash messages
+        setTimeout(() => {
+            document.querySelectorAll('.flash-message').forEach(msg => {
+                msg.style.opacity = '0';
+                msg.style.transform = 'translateX(100%)';
+                setTimeout(() => msg.remove(), 400);
+            });
+        }, 3000);
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Task — {{ task.title }}{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <!-- Back link -->
+    <a href="{% url 'tasks:list' %}" id="back-link"
+       class="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-violet-600 transition-colors duration-150 mb-6 group">
+        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-150"></i>
+        Back to tasks
+    </a>
+
+    <!-- Edit Card -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 max-w-lg mx-auto">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center">
+                <i data-lucide="pencil-line" class="w-5 h-5"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-gray-800">Edit Task</h1>
+                <p class="text-gray-400 text-xs">Update the details below.</p>
+            </div>
+        </div>
+
+        <form method="POST" action="{% url 'tasks:update' task.pk %}" id="update-task-form">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <div>
+                    <label for="task-title-input" class="block text-xs font-medium text-gray-500 mb-1">Title</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                    <p class="mt-1 text-red-500 text-xs">{{ form.title.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="task-description-input" class="block text-xs font-medium text-gray-500 mb-1">Description</label>
+                    {{ form.description }}
+                </div>
+                <!-- Priority & Deadline Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label for="task-priority-input" class="block text-xs font-medium text-gray-500 mb-1">Priority</label>
+                        {{ form.priority }}
+                    </div>
+                    <div>
+                        <label for="task-deadline-input" class="block text-xs font-medium text-gray-500 mb-1">Deadline</label>
+                        {{ form.deadline }}
+                    </div>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="submit" id="save-task-btn"
+                        class="flex-1 flex items-center justify-center gap-2 py-2.5 px-5 rounded-lg font-medium text-sm text-white
+                               bg-violet-600 hover:bg-violet-700 active:bg-violet-800
+                               shadow-sm hover:shadow transition-all duration-200">
+                        <i data-lucide="save" class="w-4 h-4"></i>
+                        Save Changes
+                    </button>
+                    <a href="{% url 'tasks:list' %}" id="cancel-btn"
+                       class="flex-1 flex items-center justify-center gap-2 py-2.5 px-5 rounded-lg font-medium text-sm text-center
+                              text-gray-500 bg-gray-100 hover:bg-gray-200 transition-all duration-200">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>lucide.createIcons();</script>
+{% endblock %}
+{% endblock %}
