@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
@@ -12,6 +13,11 @@ class Task(models.Model):
         ('high', 'High'),
     ]
 
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='tasks',
+    )
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, default='')
     completed = models.BooleanField(default=False)
