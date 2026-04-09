@@ -34,10 +34,12 @@ A full-featured task management web application built with **Django** and **Tail
 ## 📸 Screenshots
 
 ### Login Page
-> Clean authentication page with registration support
+
+![Login Page](image-1.png)
 
 ### Task Dashboard
-> View all your tasks with priority badges, deadlines, and quick actions
+
+![Task Manager Dashboard](image.png)
 
 ---
 
