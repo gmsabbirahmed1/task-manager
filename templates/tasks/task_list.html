@@ -81,7 +81,7 @@
     {% for task in tasks %}
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4 group hover:border-gray-300 transition-all duration-200 animate-fade-in
                 {% if task.is_overdue %}border-red-200 bg-red-50/30{% endif %}"
-        style="animation-delay: {{ forloop.counter0 }}50ms;" id="task-item-{{ task.pk }}">
+        id="task-item-{{ task.pk }}">
         <div class="flex items-start gap-3">
 
             <!-- Toggle Button -->
