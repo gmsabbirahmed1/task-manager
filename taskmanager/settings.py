@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']  # Update with your PythonAnywhere username: ['yourusername.pythonanywhere.com']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://sabbir359.pythonanywhere.com',
+]
+
 
 # Application definition
 
